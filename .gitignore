@@ -1,0 +1,23 @@
+# Generated Godot caches and local Android builds (project root only).
+/.godot/
+/android/
+/build/
+
+# Exported installers belong in GitHub Releases, not source history.
+*.apk
+*.aab
+
+# Private configuration and signing material.
+export_credentials.cfg
+*.keystore
+*.jks
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+__pycache__/
+*.pyc
+
+# Keep addons/godotopenxrvendors/.bin/, including its Android libraries.
