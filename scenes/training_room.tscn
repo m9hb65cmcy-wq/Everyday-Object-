@@ -1,0 +1,99 @@
+[gd_scene load_steps=20 format=3]
+[ext_resource type="Script" path="res://scripts/target_object.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/models/objects/cup.glb" id="cup_model"]
+[ext_resource type="PackedScene" path="res://assets/models/objects/phone.glb" id="phone_model"]
+[ext_resource type="PackedScene" path="res://assets/models/objects/fork.glb" id="fork_model"]
+[sub_resource type="StandardMaterial3D" id="room"]
+albedo_color = Color(0.13, 0.18, 0.28, 1)
+[sub_resource type="StandardMaterial3D" id="wood"]
+albedo_color = Color(0.36, 0.22, 0.12, 1)
+[sub_resource type="StandardMaterial3D" id="blue"]
+albedo_color = Color(0.22, 0.62, 0.95, 1)
+[sub_resource type="StandardMaterial3D" id="black"]
+albedo_color = Color(0.1, 0.11, 0.14, 1)
+[sub_resource type="StandardMaterial3D" id="white"]
+albedo_color = Color(0.86, 0.86, 0.9, 1)
+[sub_resource type="BoxMesh" id="wall"]
+size = Vector3(6.6, 3.4, 0.16)
+[sub_resource type="BoxMesh" id="table"]
+size = Vector3(1.65, 0.12, 0.75)
+[sub_resource type="CylinderMesh" id="cup"]
+top_radius = 0.18
+bottom_radius = 0.15
+height = 0.34
+[sub_resource type="BoxMesh" id="phone"]
+size = Vector3(0.24, 0.38, 0.06)
+[sub_resource type="BoxMesh" id="fork"]
+size = Vector3(0.12, 0.52, 0.05)
+[sub_resource type="BoxShape3D" id="target"]
+size = Vector3(0.46, 0.335, 0.33)
+[sub_resource type="BoxShape3D" id="phone_collision"]
+size = Vector3(0.23, 0.38, 0.045)
+[sub_resource type="BoxShape3D" id="fork_collision"]
+size = Vector3(0.125, 0.45, 0.035)
+[sub_resource type="BoxShape3D" id="table_collision"]
+size = Vector3(1.65, 0.12, 0.75)
+[sub_resource type="BoxMesh" id="table_leg"]
+size = Vector3(0.065, 0.70, 0.065)
+[node name="TrainingRoom" type="Node3D"]
+[node name="BackWall" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.7, -4.15)
+mesh = SubResource("wall")
+material_override = SubResource("room")
+[node name="TrainingTable" type="StaticBody3D" parent="."]
+position = Vector3(0, 0.72, -0.85)
+[node name="Top" type="MeshInstance3D" parent="TrainingTable"]
+mesh = SubResource("table")
+material_override = SubResource("wood")
+[node name="Lamp" type="OmniLight3D" parent="."]
+position = Vector3(0, 2.85, -1.55)
+light_energy = 1.0
+omni_range = 8.0
+[node name="Cup" type="RigidBody3D" parent="." groups=["training_targets"]]
+position = Vector3(-0.48, 0.949, -0.78)
+script = ExtResource("1")
+object_id = "cup"
+display_name = "cup"
+[node name="Model" parent="Cup" instance=ExtResource("cup_model")]
+[node name="Collision" type="CollisionShape3D" parent="Cup"]
+position = Vector3(0.06, 0, 0)
+shape = SubResource("target")
+[node name="Phone" type="RigidBody3D" parent="." groups=["training_targets"]]
+position = Vector3(0, 0.975, -0.78)
+script = ExtResource("1")
+object_id = "phone"
+display_name = "phone"
+[node name="Model" parent="Phone" instance=ExtResource("phone_model")]
+[node name="Collision" type="CollisionShape3D" parent="Phone"]
+shape = SubResource("phone_collision")
+[node name="Fork" type="RigidBody3D" parent="." groups=["training_targets"]]
+position = Vector3(0.48, 1.014, -0.78)
+script = ExtResource("1")
+object_id = "fork"
+display_name = "fork"
+[node name="Model" parent="Fork" instance=ExtResource("fork_model")]
+[node name="Collision" type="CollisionShape3D" parent="Fork"]
+shape = SubResource("fork_collision")
+
+[node name="Collision" type="CollisionShape3D" parent="TrainingTable"]
+shape = SubResource("table_collision")
+
+[node name="Leg0" type="MeshInstance3D" parent="TrainingTable"]
+position = Vector3(-0.72, -0.38, -0.25)
+mesh = SubResource("table_leg")
+material_override = SubResource("wood")
+
+[node name="Leg1" type="MeshInstance3D" parent="TrainingTable"]
+position = Vector3(0.72, -0.38, -0.25)
+mesh = SubResource("table_leg")
+material_override = SubResource("wood")
+
+[node name="Leg2" type="MeshInstance3D" parent="TrainingTable"]
+position = Vector3(-0.72, -0.38, 0.25)
+mesh = SubResource("table_leg")
+material_override = SubResource("wood")
+
+[node name="Leg3" type="MeshInstance3D" parent="TrainingTable"]
+position = Vector3(0.72, -0.38, 0.25)
+mesh = SubResource("table_leg")
+material_override = SubResource("wood")
